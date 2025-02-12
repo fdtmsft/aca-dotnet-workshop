@@ -554,7 +554,7 @@ We need to update the Azure Container App hosting the Backend API with a new rev
     az containerapp update \
       --name $BACKEND_API_NAME \
       --resource-group $RESOURCE_GROUP \
-      --revision-suffix v${TODAY}-2
+      --revision-suffix v$TODAY-2
     ```
 
 #### 4.4 Add Azure Service Bus Dapr Pub/Sub Component to Azure Container Apps Environment

@@ -649,13 +649,13 @@ The last thing we need to do here is to update both container apps and deploy th
     az containerapp update \
      --name "$FRONTEND_WEBAPP_NAME" \
      --resource-group "$RESOURCE_GROUP" \
-     --revision-suffix "v$TODAY"
+     --revision-suffix v$TODAY
     
     # Update Backend API App container app and create a new revision
     az containerapp update \
      --name "$BACKEND_API_NAME" \
      --resource-group "$RESOURCE_GROUP" \
-     --revision-suffix "v${TODAY}-1"
+     --revision-suffix v$TODAY-1
     
     echo "Azure Frontend UI URL:"
     echo "$FRONTEND_UI_BASE_URL"
