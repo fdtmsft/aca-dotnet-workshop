@@ -3,6 +3,7 @@ title: ACA Core Components Overview
 parent: Workshop Introduction
 has_children: false
 nav_order: 1
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 ## Overview of Azure Container Apps Core Components

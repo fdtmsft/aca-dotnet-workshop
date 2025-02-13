@@ -1,5 +1,5 @@
 ---
-canonical_url: https://bitoftech.net/2022/08/25/communication-microservices-azure-container-apps/
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 # Module 2 - Communication Between Microservices in ACA
@@ -100,10 +100,15 @@ By looking at the cshtml content notice that the page is expecting a query strin
 
 - Next, we will add a new environment variable named `BackendApiConfig:BaseUrlExternalHttp` into `appsettings.json` file. This variable will contain the Base URL for the backend API deployed in the previous module to ACA. Later on in the workshop, we will see how we can set the environment variable once we deploy it to ACA. Use the output from this script as the `BaseUrlExternalHttp` value.
 
-    ```PowerShell
+=== "Windows"
+    ```shell
     $BACKEND_API_EXTERNAL_BASE_URL
     ```
-
+=== "Linux"
+    ```shell
+    echo $BACKEND_API_EXTERNAL_BASE_URL
+    ```
+    
     === "appsettings.json"
     ```json
         --8<-- "docs/aca/02-aca-comm/appsettings.json"
@@ -162,7 +167,7 @@ By looking at the cshtml content notice that the page is expecting a query strin
         az acr build \
         --registry "$AZURE_CONTAINER_REGISTRY_NAME" \
         --image "tasksmanager/$FRONTEND_WEBAPP_NAME" \
-        --file TasksTracker.WebPortal.Frontend.Ui/Dockerfile .
+        --file "TasksTracker.WebPortal.Frontend.Ui/Dockerfile" .
         ```
 
 

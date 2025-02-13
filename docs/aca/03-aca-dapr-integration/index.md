@@ -1,5 +1,5 @@
 ---
-canonical_url: https://bitoftech.net/2022/08/29/dapr-integration-with-azure-container-apps/
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 # Module 3 - Dapr Integration with ACA

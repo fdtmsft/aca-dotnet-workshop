@@ -1,5 +1,5 @@
 ---
-canonical_url: https://bitoftech.net/2022/08/29/azure-container-apps-state-store-with-dapr-state-management-api/
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 # Module 4 - ACA State Store With Dapr State Management API
@@ -553,12 +553,12 @@ To do so, continue using the same PowerShell console and paste the code below. E
     az acr build \
      --registry "$AZURE_CONTAINER_REGISTRY_NAME" \
      --image "tasksmanager/$BACKEND_API_NAME" \
-     --file 'TasksTracker.TasksManager.Backend.Api/Dockerfile' .
+     --file "TasksTracker.TasksManager.Backend.Api/Dockerfile" .
     
     az acr build \
      --registry "$AZURE_CONTAINER_REGISTRY_NAME" \
      --image "tasksmanager/$FRONTEND_WEBAPP_NAME" \
-     --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
+     --file "TasksTracker.WebPortal.Frontend.Ui/Dockerfile" .
     ```
 
 #### 3.4.3 Add Cosmos DB Dapr State Store to Azure Container Apps Environment

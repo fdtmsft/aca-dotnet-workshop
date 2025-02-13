@@ -1,5 +1,5 @@
 ---
-canonical_url: https://bitoftech.net/2022/09/02/azure-container-apps-async-communication-with-dapr-pub-sub-api-part-6/
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 # Module 5 - ACA Async Communication with Dapr Pub/Sub API
@@ -483,12 +483,12 @@ As we have done previously we need to build and deploy both app images to ACR, s
     az acr build \
       --registry $AZURE_CONTAINER_REGISTRY_NAME \
       --image "tasksmanager/$BACKEND_API_NAME" \
-      --file 'TasksTracker.TasksManager.Backend.Api/Dockerfile' .
+      --file "TasksTracker.TasksManager.Backend.Api/Dockerfile" .
 
     az acr build \
       --registry $AZURE_CONTAINER_REGISTRY_NAME \
       --image "tasksmanager/$BACKEND_SERVICE_NAME" \
-      --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
+      --file "TasksTracker.Processor.Backend.Svc/Dockerfile" .
     ```
 
 #### 4.2 Create a new Azure Container App to host the new Backend Background Processor

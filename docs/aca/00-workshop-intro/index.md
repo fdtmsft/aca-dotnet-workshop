@@ -1,5 +1,6 @@
 ---
 title: Introduction
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 ## Description

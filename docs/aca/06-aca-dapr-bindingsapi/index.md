@@ -1,5 +1,5 @@
 ---
-canonical_url: https://bitoftech.net/2022/09/05/azure-container-apps-with-dapr-bindings-building-block/
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 # Module 6 - ACA with Dapr Bindings Building Block
@@ -480,7 +480,7 @@ Continue using the same PowerShell console and paste the code below (make sure y
     az acr build \
       --registry $AZURE_CONTAINER_REGISTRY_NAME \
       --image "tasksmanager/$BACKEND_SERVICE_NAME" \
-      --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
+      --file "TasksTracker.Processor.Backend.Svc/Dockerfile" .
     ```
 
 #### 4.2 Add Dapr Secret Store Component to ACA Environment

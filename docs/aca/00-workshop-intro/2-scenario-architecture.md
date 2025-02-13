@@ -3,6 +3,7 @@ title: Scenario and Solution Architecture
 parent: Workshop Introduction
 has_children: false
 nav_order: 2
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 ## Workshop Scenario

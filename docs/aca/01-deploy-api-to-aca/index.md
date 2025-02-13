@@ -1,5 +1,5 @@
 ---
-canonical_url: 'https://bitoftech.net/2022/08/25/deploy-microservice-application-azure-container-apps/'
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 # Module 1 - Deploy Backend API to ACA
@@ -23,7 +23,7 @@ In this module, we will accomplish three objectives:
 
 ### 1. Create the backend API project (Web API)
 
-- If a terminal is not yet open, from VS Code's *Terminal* tab, select *New Terminal* to open a (PowerShell) terminal in the project folder *TasksTracker.ContainerApps* (also referred to as *root*).
+- If a terminal is not yet open, from VS Code's *Terminal* tab, select *New Terminal* to open a (PowerShell or Bash ) terminal in the project folder *TasksTracker.ContainerApps* (also referred to as *root*).
 
 - We need to define the .NET version we will use throughout this workshop. In the terminal execute `dotnet --info` or, more specifically, `dotnet --list-sdks`. Take note of the intalled .NET SDK versions and select the one with which you wish to proceed.
 
@@ -106,7 +106,7 @@ In this module, we will accomplish three objectives:
     --8<-- "docs/aca/01-deploy-api-to-aca/TasksController.cs"
     ```
 
-- From VS Code Terminal tab, open developer command prompt or PowerShell terminal and navigate to the parent directory which hosts the `.csproj` project folder and build the project.
+- From VS Code Terminal tab, navigate to the parent directory which hosts the `.csproj` project folder and build the project.
 
     === "Windows"
         ```shell
@@ -184,7 +184,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         echo $AZURE_SUBSCRIPTION_ID
         ```
 
-- Execute the variables below in the PowerShell console to use them across the different modules in the workshop. Some of these variables must be globally unique, which we attempt by using `$RANDOM_STRING`:
+- Execute the variables below in the console to use them across the different modules in the workshop. Some of these variables must be globally unique, which we attempt by using `$RANDOM_STRING`:
 
     === "Windows"
         ```shell
@@ -462,7 +462,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         az acr build \
         --registry "$AZURE_CONTAINER_REGISTRY_NAME" \
         --image "tasksmanager/$BACKEND_API_NAME" \
-        --file TasksTracker.TasksManager.Backend.Api/Dockerfile .
+        --file "TasksTracker.TasksManager.Backend.Api/Dockerfile" .
         ```
 
     Once this step is completed, you can verify the results by going to the [Azure portal](https://portal.azure.com){target=_blank} and checking that a new repository named `tasksmanager/tasksmanager-backend-api` has been created, and that there is a new Docker image with a `latest` tag.

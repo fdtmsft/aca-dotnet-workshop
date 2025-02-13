@@ -1,5 +1,5 @@
 ---
-canonical_url: https://bitoftech.net/2022/09/05/azure-container-apps-with-dapr-bindings-building-block/
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 # Module 7 - ACA Scheduled Jobs with Dapr Cron Binding
@@ -161,12 +161,12 @@ To prepare for deployment to Azure Container Apps, we must build and deploy both
     az acr build \
         --registry $AZURE_CONTAINER_REGISTRY_NAME \
         --image "tasksmanager/$BACKEND_API_NAME" \
-        --file 'TasksTracker.TasksManager.Backend.Api/Dockerfile' .
+        --file "TasksTracker.TasksManager.Backend.Api/Dockerfile" .
 
     az acr build \
         --registry $AZURE_CONTAINER_REGISTRY_NAME \
         --image "tasksmanager/$BACKEND_SERVICE_NAME" \
-        --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
+        --file "TasksTracker.Processor.Backend.Svc/Dockerfile" .
     ```
 
 #### 3.2 Add the Cron Dapr Component to ACA Environment
