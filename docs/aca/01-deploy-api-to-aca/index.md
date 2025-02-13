@@ -191,7 +191,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         # Create a random, 6-digit, Azure safe string
         $RANDOM_STRING=-join ((97..122) + (48..57) | Get-Random -Count 6 | ForEach-Object { [char]$_})
         $RESOURCE_GROUP="rg-tasks-tracker-$RANDOM_STRING"
-        $LOCATION="eastus"
+        $LOCATION="westus2"
         $ENVIRONMENT="cae-tasks-tracker"
         $WORKSPACE_NAME="log-tasks-tracker-$RANDOM_STRING"
         $APPINSIGHTS_NAME="appi-tasks-tracker-$RANDOM_STRING"
@@ -205,7 +205,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         # Create a random, 6-digit, Azure safe string
         export RANDOM_STRING=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 6 | head -n 1)
         export RESOURCE_GROUP="rg-tasks-tracker-$RANDOM_STRING"
-        export LOCATION="eastus"
+        export LOCATION="westus2"
         export ENVIRONMENT="cae-tasks-tracker"
         export WORKSPACE_NAME="log-tasks-tracker-$RANDOM_STRING"
         export APPINSIGHTS_NAME="appi-tasks-tracker-$RANDOM_STRING"
