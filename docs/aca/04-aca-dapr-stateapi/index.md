@@ -85,11 +85,11 @@ To see the results visually, you can install a VS Code extension to connect to R
 Once you install the extension it will add a tab under the explorer section of VS Code called "REDIS XPLORER". Next you will need to connect to the Redis server locally by adding a new "REDIS XPLORER" profile. Click on the + sign in the "REDIS XPLORER" section in VS Code.
 This will ask you to enter the nickname (e.g. *dapr_redis*) as well as the hostname and port. For the hostname and port you can get this information by executing the following command in your powershell terminal:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     docker ps
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     docker ps
     ```
@@ -206,7 +206,7 @@ Now we will create an Azure Cosmos DB account, Database, and a new container tha
 You can use the PowerShell script below to create the Cosmos DB resources on the same resource group we used in the previous module.
 You need to set the variable name of the `$COSMOS_DB_ACCOUNT` to a unique name as it needs to be unique globally. Remember to replace the placeholders with your own values:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $COSMOS_DB_ACCOUNT="cosmos-tasks-tracker-state-store-$RANDOM_STRING"
     $COSMOS_DB_DBNAME="tasksmanagerdb"
@@ -257,7 +257,7 @@ You need to set the variable name of the `$COSMOS_DB_ACCOUNT` to a unique name a
         echo $COSMOS_DB_ENDPOINT
     }
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     export COSMOS_DB_ACCOUNT="cosmos-tasks-tracker-state-store-$RANDOM_STRING"
     export COSMOS_DB_DBNAME="tasksmanagerdb"
@@ -314,7 +314,7 @@ You need to set the variable name of the `$COSMOS_DB_ACCOUNT` to a unique name a
 Once the scripts execution is completed, we need to get the `primaryMasterKey` of the Cosmos DB account next. You can do this using the PowerShell script below.
 Copy the value of `primaryMasterKey` as we will use it in the next step.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # List Azure Cosmos DB keys
     $COSMOS_DB_PRIMARY_MASTER_KEY=(az cosmosdb keys list `
@@ -326,7 +326,7 @@ Copy the value of `primaryMasterKey` as we will use it in the next step.
     echo "Cosmos DB Primary Master Key:"
     echo $COSMOS_DB_PRIMARY_MASTER_KEY
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # List Azure Cosmos DB keys
     export COSMOS_DB_PRIMARY_MASTER_KEY=$(az cosmosdb keys list \
@@ -433,7 +433,7 @@ We will be using a `system-assigned` identity with a role assignment to grant ou
 
 Run the command below to create `system-assigned` identity for our Backend API container app:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az containerapp identity assign `
     --name $BACKEND_API_NAME `
@@ -446,7 +446,7 @@ Run the command below to create `system-assigned` identity for our Backend API c
     --query principalId `
     --output tsv)
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az containerapp identity assign \
      --name "$BACKEND_API_NAME" \
@@ -481,7 +481,7 @@ Run the command below to associate the container app `system-assigned` identity 
     Make sure you save this principal id somewhere as you will need it in later modules. You can't rely on having it saved in powershell under `$BACKEND_API_PRINCIPAL_ID` as this variable could replace later on.
     Remember to replace the placeholders with your own values:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $ROLE_ID = "00000000-0000-0000-0000-000000000002" #"Cosmos DB Built-in Data Contributor"
 
@@ -492,7 +492,7 @@ Run the command below to associate the container app `system-assigned` identity 
     --principal-id $BACKEND_API_PRINCIPAL_ID `
     --role-definition-id $ROLE_ID
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     export ROLE_ID="00000000-0000-0000-0000-000000000002" # "Cosmos DB Built-in Data Contributor"
     
@@ -536,7 +536,7 @@ Create a new folder named **aca-components** under the directory **TasksTracker.
 As we have done previously, we need to build and deploy both app images to ACR, so they are ready to be deployed to Azure Container Apps.
 To do so, continue using the same PowerShell console and paste the code below. Ensure you are in the root directory:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az acr build `
     --registry $AZURE_CONTAINER_REGISTRY_NAME `
@@ -548,7 +548,7 @@ To do so, continue using the same PowerShell console and paste the code below. E
     --image "tasksmanager/$FRONTEND_WEBAPP_NAME" `
     --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az acr build \
      --registry "$AZURE_CONTAINER_REGISTRY_NAME" \
@@ -565,7 +565,7 @@ To do so, continue using the same PowerShell console and paste the code below. E
 
 We need to run the command below to add the yaml file `.\aca-components\containerapps-statestore-cosmos.yaml` to Azure Container Apps Environment.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az containerapp env dapr-component set `
     --name $ENVIRONMENT `
@@ -573,7 +573,7 @@ We need to run the command below to add the yaml file `.\aca-components\containe
     --dapr-component-name statestore `
     --yaml '.\aca-components\containerapps-statestore-cosmos.yaml'
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az containerapp env dapr-component set \
      --name "$ENVIRONMENT" \
@@ -586,7 +586,7 @@ We need to run the command below to add the yaml file `.\aca-components\containe
 
 Until this moment Dapr was not enabled on the Container Apps we have provisioned. Enable Dapr for both Container Apps by running the two commands below in the PowerShell console.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az containerapp dapr enable `
     --name $BACKEND_API_NAME `
@@ -600,7 +600,7 @@ Until this moment Dapr was not enabled on the Container Apps we have provisioned
     --dapr-app-id  $FRONTEND_WEBAPP_NAME `
     --dapr-app-port $TARGET_PORT
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az containerapp dapr enable \
      --name "$BACKEND_API_NAME" \
@@ -626,7 +626,7 @@ Until this moment Dapr was not enabled on the Container Apps we have provisioned
 
 The last thing we need to do here is to update both container apps and deploy the new images from ACR. To do so we need to run the commands found below.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # Update Frontend web app container app and create a new revision
     az containerapp update `
@@ -643,7 +643,7 @@ The last thing we need to do here is to update both container apps and deploy th
     echo "Azure Frontend UI URL:"
     echo $FRONTEND_UI_BASE_URL
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # Update Frontend web app container app and create a new revision
     az containerapp update \

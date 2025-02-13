@@ -48,12 +48,12 @@ You are now ready to run the applications locally using the Dapr sidecar in a se
 
 - Let's start by capturing the UI and API localhost ports:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $API_APP_PORT=<web api https port in Properties->launchSettings.json (e.g. 7112)>
     $UI_APP_PORT=<web ui https port in Properties->launchSettings.json (e.g. 7000)>
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     export API_APP_PORT=<web api https port in Properties->launchSettings.json (e.g. 7112)>
     export UI_APP_PORT=<web ui https port in Properties->launchSettings.json (e.g. 7000)>
@@ -66,11 +66,11 @@ You are now ready to run the applications locally using the Dapr sidecar in a se
 
 - Now that we know the `UI_APP_PORT`, we can also declare the local frontend UI URL:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $FRONTEND_UI_BASE_URL_LOCAL="https://localhost:$UI_APP_PORT"
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     export FRONTEND_UI_BASE_URL_LOCAL="https://localhost:$UI_APP_PORT"
     ```
@@ -209,22 +209,22 @@ We are ready now to verify the changes on the Frontend Web App and test locally.
 
 - In the second terminal, run the variables script to load session variables:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     .\Variables.ps1
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     . ./variables.sh
     ```
 
 - Obtain the local frontend UI URL to test shortly once the frontend UI and backend API are running in the next step.
     
-=== "Windows"
+=== "PowerShell"
     ```shell
     $FRONTEND_UI_BASE_URL_LOCAL
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     echo $FRONTEND_UI_BASE_URL_LOCAL
     ```

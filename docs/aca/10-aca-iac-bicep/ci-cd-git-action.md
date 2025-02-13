@@ -27,7 +27,7 @@ The Azure login action supports two different ways of authenticating with Azure:
 
 In this workshop, we will use the OIDC authentication method. Assuming you are already logged in using Azure cli locally, follow the steps below to configure the repository for OIDC authentication with Azure AD either using powershell or bash/wsl:
 
-=== "Windows"
+=== "PowerShell"
 
     - Execute the following commands to create an Azure AD application and service principal.
 
@@ -58,7 +58,7 @@ In this workshop, we will use the OIDC authentication method. Assuming you are a
     az role assignment create --assignee $APP_ID --role 'User Access Administrator' --scope /subscriptions/$SUBSCRIPTION_ID
     ```
 
-=== "Linux"
+=== "Bash"
 
     - Execute the following commands to create an Azure AD application and service principal.
 

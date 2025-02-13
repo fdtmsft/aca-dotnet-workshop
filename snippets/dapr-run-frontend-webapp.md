@@ -1,7 +1,7 @@
 <!-- Basic snippet -->
 --8<-- [start:basic]
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     cd ~\TasksTracker.ContainerApps\TasksTracker.WebPortal.Frontend.Ui
 
@@ -13,7 +13,7 @@
     --app-ssl `
     -- dotnet run --launch-profile https
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     cd $PROJECT_ROOT/TasksTracker.WebPortal.Frontend.Ui
 

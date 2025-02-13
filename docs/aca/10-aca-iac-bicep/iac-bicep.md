@@ -255,7 +255,7 @@ To achieve this, add a new file under the `bicep` directory as shown below:
 
 Start by creating a new resource group which will contain all the resources to be created by the Bicep scripts.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # It is recommended to create a new resource group different from the one used for the rest of the workshop
     $RESOURCE_GROUP_MOD10="<your RG name>"
@@ -265,7 +265,7 @@ Start by creating a new resource group which will contain all the resources to b
     --name $RESOURCE_GROUP_MOD10 `
     --location $LOCATION_MOD10
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # It is recommended to create a new resource group different from the one used for the rest of the workshop
     export RESOURCE_GROUP_MOD10="<your RG name>"
@@ -302,7 +302,7 @@ Next, we will prepare container images for the three container apps and update t
 
     1. Create an Azure Container Registry (ACR) inside the newly created Resource Group:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         $CONTAINER_REGISTRY_NAME_MOD10="<your ACR name>"
 
@@ -311,7 +311,7 @@ Next, we will prepare container images for the three container apps and update t
         --name $CONTAINER_REGISTRY_NAME_MOD10 `
         --sku Basic
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         $CONTAINER_REGISTRY_NAME_MOD10="<your ACR name>"
 
@@ -323,7 +323,7 @@ Next, we will prepare container images for the three container apps and update t
 
     2. Build and push the images to ACR. Make sure you are at the root project directory when executing the following commands:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         # Build Backend API on ACR and Push to ACR
 
@@ -343,7 +343,7 @@ Next, we will prepare container images for the three container apps and update t
         --image "tasksmanager/tasksmanager-frontend-webapp" `
         --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         # Build Backend API on ACR and Push to ACR
 
@@ -390,7 +390,7 @@ Next, we will prepare container images for the three container apps and update t
 
     1. Create an Azure Container Registry (ACR) inside the newly created Resource Group:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         $CONTAINER_REGISTRY_NAME_MOD10="<your ACR name>"
 
@@ -399,7 +399,7 @@ Next, we will prepare container images for the three container apps and update t
         --name $CONTAINER_REGISTRY_NAME_MOD10 `
         --sku Basic
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         export CONTAINER_REGISTRY_NAME_MOD10="<your ACR name>"
 
@@ -410,7 +410,7 @@ Next, we will prepare container images for the three container apps and update t
         ```
     2. Import the images to your private ACR as shown below:
 
-    === "Windows"
+    === "PowerShell"
         ```shell 
         az acr import `
         --name $CONTAINER_REGISTRY_NAME_MOD10 `
@@ -427,7 +427,7 @@ Next, we will prepare container images for the three container apps and update t
         --image tasksmanager/tasksmanager-backend-processor `
         --source ghcr.io/azure/tasksmanager-backend-processor:latest
         ```
-    === "Linux"
+    === "Bash"
         ```shell 
         az acr import \
           --name $CONTAINER_REGISTRY_NAME_MOD10 \
@@ -489,14 +489,14 @@ Next, we will prepare container images for the three container apps and update t
     ```
 
 Start the deployment by calling `az deployment group create`. To accomplish this, open the console and use the content below.
-=== "Windows"
+=== "PowerShell"
     ```shell
     az deployment group create `
     --resource-group $RESOURCE_GROUP_MOD10 `
     --template-file "./bicep/main.bicep" `
     --parameters "./bicep/main.parameters.json"
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az deployment group create \
       --resource-group $RESOURCE_GROUP_MOD10 \

@@ -108,12 +108,12 @@ In this module, we will accomplish three objectives:
 
 - From VS Code Terminal tab, navigate to the parent directory which hosts the `.csproj` project folder and build the project.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         cd ~\TasksTracker.ContainerApps\TasksTracker.TasksManager.Backend.Api
         dotnet build
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         cd $PROJECT_ROOT/TasksTracker.TasksManager.Backend.Api
         dotnet build
@@ -134,7 +134,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - First, we need to ensure that our CLI is updated. Then we log in to Azure.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         # Upgrade the Azure CLI
         az upgrade
@@ -146,7 +146,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         # Log in to Azure
         az login
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         # Upgrade the Azure CLI
         az upgrade
@@ -161,7 +161,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - You may be able to use the queried Azure subscription ID or you may need to set it manually depending on your setup.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         # Retrieve the currently active Azure subscription ID
         $AZURE_SUBSCRIPTION_ID = az account show --query id --output tsv
@@ -172,7 +172,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
         echo $AZURE_SUBSCRIPTION_ID
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         # Retrieve the currently active Azure subscription ID
         export AZURE_SUBSCRIPTION_ID=$(az account show --query id --output tsv)
@@ -186,7 +186,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Execute the variables below in the console to use them across the different modules in the workshop. Some of these variables must be globally unique, which we attempt by using `$RANDOM_STRING`:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         # Create a random, 6-digit, Azure safe string
         $RANDOM_STRING=-join ((97..122) + (48..57) | Get-Random -Count 6 | ForEach-Object { [char]$_})
@@ -200,7 +200,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         $VNET_NAME="vnet-tasks-tracker"
         $TARGET_PORT={{ docker.targetport }}
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         # Create a random, 6-digit, Azure safe string
         export RANDOM_STRING=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 6 | head -n 1)
@@ -220,13 +220,13 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Create a resource group to organize the services related to the application, run the below command:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         az group create `
         --name $RESOURCE_GROUP `
         --location "$LOCATION"
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         az group create \
         --name "$RESOURCE_GROUP" \
@@ -240,7 +240,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - We need to create a virtual network (VNet) to secure our container apps. Note that while the VNet size with `/16` CIDR is arbitrary, the container app subnet must have at least a `/27` CIDR.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         az network vnet create `
         --name $VNET_NAME `
@@ -249,7 +249,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         --subnet-name ContainerAppSubnet `
         --subnet-prefix 10.0.0.0/27
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         az network vnet create \
         --name "$VNET_NAME" \
@@ -261,7 +261,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Azure Container Apps requires management of the subnet, so we must delegate exclusive control.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         az network vnet subnet update `
         --name ContainerAppSubnet `
@@ -269,7 +269,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         --vnet-name $VNET_NAME `
         --delegations Microsoft.App/environments
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         az network vnet subnet update \
         --name ContainerAppSubnet \
@@ -280,7 +280,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Retrieve the Azure Container App subnet resource ID as it will be referenced when the Azure Container App Environment is created later.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         $ACA_ENVIRONMENT_SUBNET_ID=$(az network vnet subnet show `
         --name ContainerAppSubnet `
@@ -289,7 +289,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         --query id `
         --output tsv)
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         export ACA_ENVIRONMENT_SUBNET_ID=$(az network vnet subnet show \
         --name ContainerAppSubnet \
@@ -303,7 +303,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Create an Azure Log Analytics workspace which will provide a common place to store the system and application log data from all container apps running in the environment. Each environment should have its own Log Analytics workspace.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         # Create the Log Analytics workspace
         az monitor log-analytics workspace create `
@@ -324,7 +324,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         --query primarySharedKey `
         --output tsv
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         # Create the Log Analytics workspace
         az monitor log-analytics workspace create \
@@ -348,7 +348,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Create an [Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview?tabs=net){target=_blank} instance which will be used mainly for [distributed tracing](https://learn.microsoft.com/azure/azure-monitor/app/distributed-tracing){target=_blank} between different container apps within the ACA environment to provide searching for and visualizing an end-to-end flow of a given execution or transaction. To create it, run the command below:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         # Create Application Insights instance
         az monitor app-insights component create `
@@ -365,7 +365,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
         echo $APPINSIGHTS_INSTRUMENTATIONKEY
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         # Create Application Insights instance
         az monitor app-insights component create \
@@ -387,7 +387,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Create an Azure Container Registry (ACR) instance in the resource group to store images of all Microservices we are going to build during this workshop. Make sure that you set the `admin-enabled` flag to true in order to seamlessly authenticate the Azure container app when trying to create the container app using the image stored in ACR.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         az acr create `
         --name $AZURE_CONTAINER_REGISTRY_NAME `
@@ -395,7 +395,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         --sku Basic `
         --admin-enabled true
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         az acr create \
         --name "$AZURE_CONTAINER_REGISTRY_NAME" \
@@ -409,7 +409,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Now we will create an Azure Container Apps Environment. As a reminder of the different ACA components, [see this link in the workshop introduction](../../aca/00-workshop-intro/1-aca-core-components.md). The ACA environment acts as a secure boundary around a group of container apps that we are going to provision during this workshop.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         # Create the ACA environment
         az containerapp env create `
@@ -422,7 +422,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         --enable-workload-profiles `
         --infrastructure-subnet-resource-id $ACA_ENVIRONMENT_SUBNET_ID
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         # Create the ACA environment
         az containerapp env create \
@@ -450,14 +450,14 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - Build the Web API project on ACR and push the docker image to ACR. Use the below command to initiate the image build and push process using ACR. The `.` at the end of the command represents the docker build context, in our case, we need to be on the parent directory which hosts the `.csproj`.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         az acr build `
         --registry $AZURE_CONTAINER_REGISTRY_NAME `
         --image "tasksmanager/$BACKEND_API_NAME" `
         --file 'TasksTracker.TasksManager.Backend.Api/Dockerfile' .
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         az acr build \
         --registry "$AZURE_CONTAINER_REGISTRY_NAME" \
@@ -469,7 +469,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
 
 - The last step here is to create and deploy the Web API to ACA following the below command:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         $fqdn=(az containerapp create `
         --name $BACKEND_API_NAME `
@@ -491,7 +491,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         echo "See a listing of tasks created by the author at this URL:"
         echo "https://$fqdn/api/tasks/?createdby=tjoudeh@bitoftech.net"
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         fqdn=$(az containerapp create \
         --name "$BACKEND_API_NAME" \

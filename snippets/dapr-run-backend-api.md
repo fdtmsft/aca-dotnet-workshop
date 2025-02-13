@@ -1,6 +1,6 @@
 <!-- Basic snippet -->
 --8<-- [start:basic]
-=== "Windows"
+=== "PowerShell"
     ```shell
     cd ~\TasksTracker.ContainerApps\TasksTracker.TasksManager.Backend.Api
     
@@ -12,7 +12,7 @@
     --app-ssl `
     -- dotnet run --launch-profile https
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     cd $PROJECT_ROOT/TasksTracker.TasksManager.Backend.Api
     
@@ -31,7 +31,7 @@
 
 <!-- Dapr Components snippet -->
 --8<-- [start:dapr-components]
-=== "Windows"
+=== "PowerShell"
     ```shell
     cd ~\TasksTracker.ContainerApps\TasksTracker.TasksManager.Backend.Api
     
@@ -44,7 +44,7 @@
     --resources-path "../components" `
     -- dotnet run --launch-profile https
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     cd $PROJECT_ROOT/TasksTracker.TasksManager.Backend.Api
     

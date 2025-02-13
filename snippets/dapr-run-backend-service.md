@@ -1,7 +1,7 @@
 <!-- Dapr Components snippet -->
 --8<-- [start:dapr-components]
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     cd ~\TasksTracker.ContainerApps\TasksTracker.Processor.Backend.Svc
 
@@ -14,7 +14,7 @@
     --resources-path "../components" `
     -- dotnet run --launch-profile https
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     cd $PROJECT_ROOT/TasksTracker.Processor.Backend.Svc
 

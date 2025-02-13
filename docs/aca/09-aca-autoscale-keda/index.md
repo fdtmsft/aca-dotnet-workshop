@@ -76,7 +76,7 @@ Azure Container Apps has its own proprietary schema to map a KEDA Scaler templat
 
 Let's now create a secret named `svcbus-connstring` in our `tasksmanager-backend-processor` Container App. This secret will contain the value of Azure Service Bus shared access policy (connection string) with `Manage` policy. To accomplish this, run the following commands in the Azure CLI to get the connection string, and then add this secret using the second command:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # List Service Bus Access Policy RootManageSharedAccessKey
     $SERVICE_BUS_CONNECTION_STRING = az servicebus namespace authorization-rule keys list `
@@ -92,7 +92,7 @@ Let's now create a secret named `svcbus-connstring` in our `tasksmanager-backend
     --resource-group $RESOURCE_GROUP `
     --secrets "svcbus-connstring=$SERVICE_BUS_CONNECTION_STRING"
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # List Service Bus Access Policy RootManageSharedAccessKey
     export SERVICE_BUS_CONNECTION_STRING=$(az servicebus namespace authorization-rule keys list \
@@ -116,7 +116,7 @@ Now we are ready to add a new custom scaling rule to match the business requirem
 !!! note
     You might need to upgrade the extension if you are on an older version of `az containerapp` which didn't allow you to create a scaling rule from CLI. To update the extension you can run the following command `az extension update --name containerapp` inside your PowerShell terminal.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az containerapp update `
     --name $BACKEND_SERVICE_NAME `
@@ -133,7 +133,7 @@ Now we are ready to add a new custom scaling rule to match the business requirem
                             "messageCount=10" `
                             "connectionFromEnv=svcbus-connstring"
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az containerapp update \
       --name $BACKEND_SERVICE_NAME \
@@ -173,14 +173,14 @@ Now we are ready to add a new custom scaling rule to match the business requirem
 Now we are ready to test out our Azure Service Bus Scaling Rule. To produce a high volume of messages, you can utilize the Service Bus Explorer located within your Azure Service Bus namespace. Navigate to Azure Service Bus, choose your topic/subscription, and then select the Service Bus Explorer option.
 To get the number of current replicas of service `tasksmanager-backend-processor` we could run the command below, this should run single replica as we didn't load the service bus topic yet.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az containerapp replica list `
     --name $BACKEND_SERVICE_NAME `
     --resource-group $RESOURCE_GROUP `
     --query [].name
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az containerapp replica list \
       --name $BACKEND_SERVICE_NAME \

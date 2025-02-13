@@ -83,7 +83,7 @@ Run the PowerShell script below to create Azure Storage Account and get the mast
     We didn't use Azure Manged Identity here because the assumption is that those services are not part of our solution and thus they could theoretically be a non AD compliant services or hosted on another cloud.
     If these services where part of your application's ecosystem it is always recommended that you use Azure Managed Identity.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $STORAGE_ACCOUNT_NAME = "sttaskstracker$RANDOM_STRING"
 
@@ -108,7 +108,7 @@ Run the PowerShell script below to create Azure Storage Account and get the mast
     echo "Storage Account Name : $STORAGE_ACCOUNT_NAME"
     echo "Storage Account Key  : $STORAGE_ACCOUNT_KEY"
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     export STORAGE_ACCOUNT_NAME="sttaskstracker$RANDOM_STRING"
 
@@ -292,7 +292,7 @@ with [Azure Key Vault secret store](https://docs.dapr.io/reference/components-re
 
 Create an Azure Key Vault which will be used to store securely any secret or key used in our application.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $KEYVAULT_NAME = "kv-tasks-tracker-$RANDOM_STRING"
 
@@ -302,7 +302,7 @@ Create an Azure Key Vault which will be used to store securely any secret or key
     --location $LOCATION `
     --enable-rbac-authorization true
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     export KEYVAULT_NAME="kv-tasks-tracker-$RANDOM_STRING"
 
@@ -322,7 +322,7 @@ In the previous module we have configured the `system-assigned` identity for the
 
 You can read more about [Azure built-in roles for Key Vault data plane operations](https://learn.microsoft.com/azure/key-vault/general/rbac-guide?tabs=azure-cli#azure-built-in-roles-for-key-vault-data-plane-operations){target=_blank}.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $KEYVAULT_SECRETS_USER_ROLE_ID = "4633458b-17de-408a-b874-0445c86b69e6" # ID for 'Key Vault Secrets User' Role
 
@@ -338,7 +338,7 @@ You can read more about [Azure built-in roles for Key Vault data plane operation
     --assignee $BACKEND_SERVICE_PRINCIPAL_ID `
     --scope "/subscriptions/$AZURE_SUBSCRIPTION_ID/resourcegroups/$RESOURCE_GROUP/providers/Microsoft.KeyVault/vaults/$KEYVAULT_NAME"
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     export KEYVAULT_SECRETS_USER_ROLE_ID="4633458b-17de-408a-b874-0445c86b69e6" # ID for 'Key Vault Secrets User' Role
 
@@ -360,7 +360,7 @@ You can read more about [Azure built-in roles for Key Vault data plane operation
 To create a secret in Azure Key Vault you need to have a role which allows you to create secrets. From the Azure CLI we will assign the role `Key Vault Secrets Officer` to the user signed in to AZ CLI to
 be able to create secrets. To do so use the script below:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $SIGNEDIN_USERID = az ad signed-in-user show --query id --output tsv
     $KEYVAULT_SECRETS_OFFICER_ROLE_ID = "b86a8fe4-44ce-4948-aee5-eccb2c155cd7" # ID for 'Key Vault Secrets Office' Role
@@ -370,7 +370,7 @@ be able to create secrets. To do so use the script below:
     --assignee $SIGNEDIN_USERID `
     --scope "/subscriptions/$AZURE_SUBSCRIPTION_ID/resourcegroups/$RESOURCE_GROUP/providers/Microsoft.KeyVault/vaults/$KEYVAULT_NAME"
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     export SIGNEDIN_USERID=$(az ad signed-in-user show --query id --output tsv)
     export KEYVAULT_SECRETS_OFFICER_ROLE_ID="b86a8fe4-44ce-4948-aee5-eccb2c155cd7" # ID for 'Key Vault Secrets Office' Role
@@ -383,7 +383,7 @@ be able to create secrets. To do so use the script below:
 
 Now we will create the secrets in the Azure Key Vault using the commands below:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # Set External Azure Storage Access Key as a secret named 'external-azure-storage-key'
     az keyvault secret set `
@@ -391,7 +391,7 @@ Now we will create the secrets in the Azure Key Vault using the commands below:
     --name "external-azure-storage-key" `
     --value $STORAGE_ACCOUNT_KEY
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # Set External Azure Storage Access Key as a secret named 'external-azure-storage-key'
     az keyvault secret set \
@@ -404,11 +404,11 @@ Now we will create the secrets in the Azure Key Vault using the commands below:
 
 Obtain the name of the Key Vault.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $KEYVAULT_NAME
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     echo $KEYVAULT_NAME
     ```
@@ -470,14 +470,14 @@ With those changes in place, we are ready to rebuild the backend background proc
 As we have done previously we need to build and deploy the Backend Background Processor image to ACR, so it is ready to be deployed to ACA.
 Continue using the same PowerShell console and paste the code below (make sure you are under the  **TasksTracker.ContainerApps** directory):
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az acr build `
     --registry $AZURE_CONTAINER_REGISTRY_NAME `
     --image "tasksmanager/$BACKEND_SERVICE_NAME" `
     --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az acr build \
       --registry $AZURE_CONTAINER_REGISTRY_NAME \
@@ -489,7 +489,7 @@ Continue using the same PowerShell console and paste the code below (make sure y
 
 We need to run the command below from the root to create the Dapr secret store component:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az containerapp env dapr-component set `
     --name $ENVIRONMENT `
@@ -497,7 +497,7 @@ We need to run the command below from the root to create the Dapr secret store c
     --dapr-component-name secretstoreakv `
     --yaml '.\aca-components\containerapps-secretstore-kv.yaml'
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az containerapp env dapr-component set \
       --name $ENVIRONMENT \
@@ -510,7 +510,7 @@ We need to run the command below from the root to create the Dapr secret store c
 
 Next, we will add the Dapr bindings components using the component files created.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # Input binding component for Azure Storage Queue
     az containerapp env dapr-component set `
@@ -526,7 +526,7 @@ Next, we will add the Dapr bindings components using the component files created
     --dapr-component-name externaltasksblobstore `
     --yaml '.\aca-components\containerapps-bindings-out-blobstorage.yaml'
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # Input binding component for Azure Storage Queue
     az containerapp env dapr-component set \
@@ -547,7 +547,7 @@ Next, we will add the Dapr bindings components using the component files created
 
 Update the Azure Container App hosting the Backend Background Processor with a new revision so our code changes are available for end users.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # Update Backend Background Processor container app and create a new revision
     az containerapp update `
@@ -555,7 +555,7 @@ Update the Azure Container App hosting the Backend Background Processor with a n
     --resource-group $RESOURCE_GROUP `
     --revision-suffix v$TODAY-3
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # Update Backend Background Processor container app and create a new revision
     az containerapp update \

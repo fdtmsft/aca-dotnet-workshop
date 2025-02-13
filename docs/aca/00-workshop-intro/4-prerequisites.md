@@ -39,12 +39,12 @@ This workshop typically spans several days. As such, you may close your tools, e
 
 - Open a command-line terminal and create this folder for the workshop, then switch to that folder.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         md TasksTracker.ContainerApps
         cd TasksTracker.ContainerApps
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         mkdir TasksTracker.ContainerApps
         cd TasksTracker.ContainerApps
@@ -80,12 +80,12 @@ This workshop typically spans several days. As such, you may close your tools, e
 
 - Commit the `.gitignore` file.
 
-    === "Windows"
+    === "PowerShell"
         ```shell 
         git add .\.gitignore
         git commit -m "Add .gitignore"
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         git add ./.gitignore
         git commit -m "Add .gitignore"
@@ -93,7 +93,7 @@ This workshop typically spans several days. As such, you may close your tools, e
 
 ### Set-Variables & Variables Script
 
-=== "Windows"
+=== "PowerShell"
     - In the root create a new file called `Set-Variables.ps1`.
 
     - Copy the [Set-Variables.ps1 script](../../aca/30-appendix/03-variables.md){target=_blank} into the newly-created `Set-Variables.ps1` file and save it.
@@ -110,7 +110,7 @@ This workshop typically spans several days. As such, you may close your tools, e
         git add .\Set-Variables.ps1
         git commit -m "Add Set-Variables.ps1"
         ```
-=== "Linux"
+=== "Bash"
     - In the root create a new file called `set_variables.sh`.
 
     - Copy the [set_variables.sh script](../../aca/30-appendix/03-variables.md){target=_blank} into the newly-created `set_variables.sh` file and save it.

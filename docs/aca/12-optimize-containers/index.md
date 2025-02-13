@@ -56,7 +56,7 @@ Our original `Dockerfile` files look like this:
     ```
 
 From the TasksTracker.ContainerApps directory, run the following commands:
-=== "Windows"
+=== "PowerShell"
     ```shell
     docker build -t backend-api-status-quo `
     -f .\TasksTracker.TasksManager.Backend.Api\Dockerfile .
@@ -69,7 +69,7 @@ From the TasksTracker.ContainerApps directory, run the following commands:
 
     docker image list
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     docker build -t backend-api-status-quo \
       -f ./TasksTracker.TasksManager.Backend.Api/Dockerfile .
@@ -114,7 +114,7 @@ Create three new files, `Dockerfile.concise` in each of their respective directo
 
 Run the following commands from the project root directory to build the concise images. All images will build, but they will continue to essentially be identical to the status quo images.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     docker build -t backend-api-concise `
     -f .\TasksTracker.TasksManager.Backend.Api\Dockerfile.concise `
@@ -130,7 +130,7 @@ Run the following commands from the project root directory to build the concise 
 
     docker image list
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     docker build -t backend-api-concise \
     -f ./TasksTracker.TasksManager.Backend.Api/Dockerfile.concise \
@@ -170,7 +170,7 @@ Create three new files, `Dockerfile.chiseled` in each of their respective direct
 
 Run the following commands from the project root directory to build the chiseled images:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     docker build -t backend-api-chiseled `
     -f .\Tracker.TasksManager.Backend.Api\Dockerfile.chiseled `
@@ -186,7 +186,7 @@ Run the following commands from the project root directory to build the chiseled
 
     docker image list
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     docker build -t backend-api-chiseled \
     -f ./Tracker.TasksManager.Backend.Api/Dockerfile.chiseled \
@@ -217,7 +217,7 @@ While the image is vastly reduced, what hasn't changed is the functionality of t
 
 Let's update our existing Backend API container app with a new build and revision:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     ## Build ACR and Update the Container Apps
 
@@ -255,7 +255,7 @@ Let's update our existing Backend API container app with a new build and revisio
     --revision-suffix v$TODAY-6 `
     --set-env-vars "ApplicationInsights__InstrumentationKey=secretref:appinsights-key"
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     az acr build \
       --registry $AZURE_CONTAINER_REGISTRY_NAME \
@@ -297,11 +297,11 @@ Let's update our existing Backend API container app with a new build and revisio
 
 Verify that the application continues to work:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $FRONTEND_UI_BASE_URL
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     echo $FRONTEND_UI_BASE_URL
     ```

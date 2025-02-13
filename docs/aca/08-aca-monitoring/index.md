@@ -185,11 +185,11 @@ In the previous module, we've used Dapr Secret Store to store connection strings
 
 We need to set the Application Insights Instrumentation Key so that the projects are able to send telemetry data to the Application Insights instance. We are going to set this via secrets and environment variables once we redeploy the Container Apps and create new revisions. Locally, we can **set it in each appsettings.json** file. Obtain the key from the variable:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $APPINSIGHTS_INSTRUMENTATIONKEY
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     echo $APPINSIGHTS_INSTRUMENTATIONKEY
     ```
@@ -215,7 +215,7 @@ With this step completed, we have done all the changes needed. Let's now deploy 
 
 Let's create a secret named `appinsights-key` on each Container App which contains the value of the Application Insights instrumentation key:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     az containerapp secret set `
     --name $BACKEND_API_NAME `
@@ -233,7 +233,7 @@ Let's create a secret named `appinsights-key` on each Container App which contai
     --secrets "appinsights-key=$APPINSIGHTS_INSTRUMENTATIONKEY "
     ```
 
-=== "Linux"
+=== "Bash"
     ```shell
     az containerapp secret set \
       --name $BACKEND_API_NAME \
@@ -257,7 +257,7 @@ As we did before, we are required to build and push the images of the three appl
 
 To accomplish this, continue using the same PowerShell console and paste the code below:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     cd ~\TasksTracker.ContainerApps
 
@@ -280,7 +280,7 @@ To accomplish this, continue using the same PowerShell console and paste the cod
     --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
     ```
 
-=== "Linux"
+=== "Bash"
     ```shell
     cd $PROJECT_ROOT
     
@@ -310,7 +310,7 @@ We need to update all three container apps with new revisions so that our code c
 !!! tip
     Notice how we used the property `--set-env-vars` to set new environment variable named `ApplicationInsights__InstrumentationKey`. Its value is a secret reference obtained from the secret `appinsights-key` we added in step 1.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # Update Backend API App container app and create a new revision
     az containerapp update `
@@ -334,7 +334,7 @@ We need to update all three container apps with new revisions so that our code c
     --set-env-vars "ApplicationInsights__InstrumentationKey=secretref:appinsights-key"
     ```
 
-=== "Linux"
+=== "Bash"
     ```shell
     # Update Backend API App container app and create a new revision
     az containerapp update \

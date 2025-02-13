@@ -144,7 +144,7 @@ Add a new file folder **aca-components**. This file will be used when updating t
 
 To prepare for deployment to Azure Container Apps, we must build and deploy both application images to ACR, just as we did before. We can use the same console with the following code:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     cd ~\TasksTracker.ContainerApps
 
@@ -158,7 +158,7 @@ To prepare for deployment to Azure Container Apps, we must build and deploy both
     --image "tasksmanager/$BACKEND_SERVICE_NAME" `
     --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     cd $PROJECT_ROOT
 
@@ -175,7 +175,7 @@ To prepare for deployment to Azure Container Apps, we must build and deploy both
 
 #### 3.2 Add the Cron Dapr Component to ACA Environment
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # Cron binding component
     az containerapp env dapr-component set `
@@ -183,7 +183,7 @@ To prepare for deployment to Azure Container Apps, we must build and deploy both
     --dapr-component-name scheduledtasksmanager `
     --yaml '.\aca-components\containerapps-scheduled-cron.yaml'
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # Cron binding component
     az containerapp env dapr-component set \
@@ -197,7 +197,7 @@ To prepare for deployment to Azure Container Apps, we must build and deploy both
 As we did before, we need to update the Azure Container App hosting the Backend API & Backend Background Processor with a new revision so our code changes are available for the end users.
 To accomplish this run the script below:
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     # Update Backend API App container app and create a new revision
     az containerapp update `
@@ -211,7 +211,7 @@ To accomplish this run the script below:
     --resource-group $RESOURCE_GROUP `
     --revision-suffix v$TODAY-4
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     # Update Backend API App container app and create a new revision
     az containerapp update \

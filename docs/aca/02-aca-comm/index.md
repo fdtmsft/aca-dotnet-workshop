@@ -100,11 +100,11 @@ By looking at the cshtml content notice that the page is expecting a query strin
 
 - Next, we will add a new environment variable named `BackendApiConfig:BaseUrlExternalHttp` into `appsettings.json` file. This variable will contain the Base URL for the backend API deployed in the previous module to ACA. Later on in the workshop, we will see how we can set the environment variable once we deploy it to ACA. Use the output from this script as the `BaseUrlExternalHttp` value.
 
-=== "Windows"
+=== "PowerShell"
     ```shell
     $BACKEND_API_EXTERNAL_BASE_URL
     ```
-=== "Linux"
+=== "Bash"
     ```shell
     echo $BACKEND_API_EXTERNAL_BASE_URL
     ```
@@ -128,12 +128,12 @@ By looking at the cshtml content notice that the page is expecting a query strin
 
 - From VS Code Terminal tab, open developer command prompt or PowerShell terminal and navigate to the frontend directory which hosts the `.csproj` project folder and build the project.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         cd ~\TasksTracker.ContainerApps\TasksTracker.WebPortal.Frontend.Ui
         dotnet build
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         cd $PROJECT_ROOT/TasksTracker.WebPortal.Frontend.Ui
         dotnet build
@@ -146,18 +146,18 @@ By looking at the cshtml content notice that the page is expecting a query strin
 
 - We need to add the below shell variables:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         $FRONTEND_WEBAPP_NAME="tasksmanager-frontend-webapp"
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         export FRONTEND_WEBAPP_NAME="tasksmanager-frontend-webapp"
         ```
 
 - Now we will build and push the Web App project docker image to ACR. Use the below command to initiate the image build and push process using ACR. The `.` at the end of the command represents the docker build context. In our case, we need to be on the parent directory which hosts the .csproject.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         cd ~\TasksTracker.ContainerApps
 
@@ -166,7 +166,7 @@ By looking at the cshtml content notice that the page is expecting a query strin
         --image "tasksmanager/$FRONTEND_WEBAPP_NAME" `
         --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         cd $PROJECT_ROOT
 
@@ -181,7 +181,7 @@ By looking at the cshtml content notice that the page is expecting a query strin
 
 - Next, we will create and deploy the Web App to ACA using the following command:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         $fqdn=(az containerapp create `
         --name "$FRONTEND_WEBAPP_NAME"  `
@@ -204,7 +204,7 @@ By looking at the cshtml content notice that the page is expecting a query strin
         echo "See the frontend web app at this URL:"
         echo $FRONTEND_UI_BASE_URL
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         fqdn=$(az containerapp create \
           --name "$FRONTEND_WEBAPP_NAME" \
@@ -240,7 +240,7 @@ So far the Frontend App is sending HTTP requests to the publicly exposed Web API
 
 - To change the settings of the Backend API, execute the following command:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         $fqdn=(az containerapp ingress enable `
         --name $BACKEND_API_NAME  `
@@ -255,7 +255,7 @@ So far the Frontend App is sending HTTP requests to the publicly exposed Web API
         echo "The internal backend API URL:"
         echo $BACKEND_API_INTERNAL_BASE_URL
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         fqdn=$(az containerapp ingress enable \
           --name "$BACKEND_API_NAME" \
@@ -281,14 +281,14 @@ So far the Frontend App is sending HTTP requests to the publicly exposed Web API
 
 - Now we will need to update the Frontend Web App environment variable to point to the **internal** backend Web API FQDN. The last thing we need to do here is to update the Frontend WebApp environment variable named `BackendApiConfig:BaseUrlExternalHttp` with the new value of the *internal* Backend Web API base URL, to do so we need to update the Web App container app and it will create a new revision implicitly (more about revisions in the upcoming modules). We need to use the double underscore format to set the variable. The following command will update the container app with the changes:
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         az containerapp update `
         --name "$FRONTEND_WEBAPP_NAME" `
         --resource-group $RESOURCE_GROUP `
         --set-env-vars "BackendApiConfig__BaseUrlExternalHttp=$BACKEND_API_INTERNAL_BASE_URL/"
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         az containerapp update \
         --name "$FRONTEND_WEBAPP_NAME" \
@@ -299,11 +299,11 @@ So far the Frontend App is sending HTTP requests to the publicly exposed Web API
 !!! success
     Browse the web app again, and you should be able to see the same results and access the backend API endpoints from the Web App. You can obtain the frontend URL by displaying this variable.
 
-    === "Windows"
+    === "PowerShell"
         ```shell
         $FRONTEND_UI_BASE_URL
         ```
-    === "Linux"
+    === "Bash"
         ```shell
         echo "$FRONTEND_UI_BASE_URL"
         ```
