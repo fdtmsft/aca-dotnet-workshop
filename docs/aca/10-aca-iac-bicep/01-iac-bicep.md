@@ -1,3 +1,11 @@
+---
+title: Deploy Infrastructure using Bicep
+parent: Module 10 - Deployment Via Bicep and DevOps
+has_children: false
+nav_order: 1
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
+---
+
 # Build the Infrastructure as Code Using Bicep
 
 !!! info "Module Duration"

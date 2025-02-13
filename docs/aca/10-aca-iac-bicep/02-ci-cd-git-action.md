@@ -1,3 +1,11 @@
+---
+title: Deploy Infrastructure using Bicep via GitHub Actions
+parent: Module 10 - Deployment Via Bicep and DevOps
+has_children: false
+nav_order: 2
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
+---
+
 # Deploy Infrastructure Using GitHub Actions
 
 !!! info "Module Duration"

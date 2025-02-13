@@ -212,7 +212,7 @@ We will be using Azure CLI to deploy the Web API Backend to ACA as shown in the 
         export BACKEND_API_NAME="tasksmanager-backend-api"
         export AZURE_CONTAINER_REGISTRY_NAME="crtaskstracker$RANDOM_STRING"
         export VNET_NAME="vnet-tasks-tracker"
-        export TARGET_PORT=8080
+        export TARGET_PORT={{ docker.targetport }}
         ```
 
 ???+ tip "Cloud Adoption Framework Abbreviations"

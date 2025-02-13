@@ -80,7 +80,7 @@ Run the PowerShell script below to create Azure Storage Account and get the mast
     We will be retrieving the storage account key for local dev testing purposes. Note that the command below will return two keys. You will only need one of them for this exercise.
     When deploying the changes to ACA, we are going to store the storage key securely into Azure Key Vault using [Dapr Secrets Store Building Block with AKV](https://docs.dapr.io/reference/components-reference/supported-secret-stores/azure-keyvault/){target=_blank}.
 
-    We didn't use Azure Manged Identity here because the assumption is that those services are not part of our solution and thus they could theoretically be a non AD compliant services or hosted on another cloud.
+    We didn't use Azure Managed Identity here because the assumption is that those services are not part of our solution and thus they could theoretically be a non AD compliant services or hosted on another cloud.
     If these services where part of your application's ecosystem it is always recommended that you use Azure Managed Identity.
 
 === "PowerShell"

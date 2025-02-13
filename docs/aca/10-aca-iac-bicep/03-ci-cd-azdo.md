@@ -1,3 +1,10 @@
+---
+title: Deploy infrastructure using Azure Devops Pipeline
+parent: Module 10 - Deployment Via Bicep and DevOps
+has_children: false
+nav_order: 3
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
+---
 
 # Deploy Infrastructure Using Azure DevOps
 
