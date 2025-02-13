@@ -128,10 +128,16 @@ By looking at the cshtml content notice that the page is expecting a query strin
 
 - From VS Code Terminal tab, open developer command prompt or PowerShell terminal and navigate to the frontend directory which hosts the `.csproj` project folder and build the project.
 
-    ```shell
-    cd ~\TasksTracker.ContainerApps\TasksTracker.WebPortal.Frontend.Ui
-    dotnet build
-    ```
+    === "Windows"
+        ```shell
+        cd ~\TasksTracker.ContainerApps\TasksTracker.WebPortal.Frontend.Ui
+        dotnet build
+        ```
+    === "Linux"
+        ```shell
+        cd $PROJECT_ROOT/TasksTracker.WebPortal.Frontend.Ui
+        dotnet build
+        ```
 
 !!! note
     Make sure that the build is successful and that there are no build errors. Usually you should see a **Build succeeded** message in the terminal upon a successful build.
@@ -162,7 +168,7 @@ By looking at the cshtml content notice that the page is expecting a query strin
         ```
     === "Linux"
         ```shell
-        cd ~/TasksTracker.ContainerApps
+        cd $PROJECT_ROOT
 
         az acr build \
         --registry "$AZURE_CONTAINER_REGISTRY_NAME" \

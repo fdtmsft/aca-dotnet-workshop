@@ -240,11 +240,13 @@ Update and replace the code in the file with the code below. Pay close attention
 
 #### 2.5 Test Dapr Bindings Locally
 
---8<-- "snippets/update-variables.md::5"
+--8<-- "snippets/update-variables.md::13"
 
-Now we are ready to give it an end-to-end test on our dev machines. To do so, run the below commands in three separate PowerShell console, ensure you are on the right root folder of each respective project.
+Now we are ready to give it an end-to-end test on our dev machines. To do so, first restore the variables in three separate console, ensure you are on the right root folder of each respective project:
 
---8<-- "snippets/restore-variables.md:7:11"
+--8<-- "snippets/restore-variables.md:15:23"
+
+Once the variables are restored on each terminal, execute the following commands:
 
 === ".NET 8 or above"
 

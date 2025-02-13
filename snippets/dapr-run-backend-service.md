@@ -16,7 +16,7 @@
     ```
 === "Linux"
     ```shell
-    cd ~/TasksTracker.ContainerApps/TasksTracker.Processor.Backend.Svc
+    cd $PROJECT_ROOT/TasksTracker.Processor.Backend.Svc
 
     dapr run \
     --app-id tasksmanager-backend-processor \

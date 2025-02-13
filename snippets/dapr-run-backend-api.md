@@ -14,7 +14,7 @@
     ```
 === "Linux"
     ```shell
-    cd ~/TasksTracker.ContainerApps/TasksTracker.TasksManager.Backend.Api
+    cd $PROJECT_ROOT/TasksTracker.TasksManager.Backend.Api
     
     dapr run \
     --app-id tasksmanager-backend-api \
@@ -46,7 +46,7 @@
     ```
 === "Linux"
     ```shell
-    cd ~/TasksTracker.ContainerApps/TasksTracker.TasksManager.Backend.Api
+    cd $PROJECT_ROOT/TasksTracker.TasksManager.Backend.Api
     
     dapr run \
     --app-id tasksmanager-backend-api \

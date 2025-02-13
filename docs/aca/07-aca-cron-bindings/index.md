@@ -142,10 +142,12 @@ Add a new file folder **aca-components**. This file will be used when updating t
 
 #### 3.1 Build the Backend Background Processor and the Backend API App Images and Push them to ACR
 
-To prepare for deployment to Azure Container Apps, we must build and deploy both application images to ACR, just as we did before. We can use the same PowerShell console use the following code (make sure you are on directory **TasksTracker.ContainerApps**):
+To prepare for deployment to Azure Container Apps, we must build and deploy both application images to ACR, just as we did before. We can use the same console with the following code:
 
-==== "Windows"
+=== "Windows"
     ```shell
+    cd ~\TasksTracker.ContainerApps
+
     az acr build `
     --registry $AZURE_CONTAINER_REGISTRY_NAME `
     --image "tasksmanager/$BACKEND_API_NAME" `
@@ -156,22 +158,24 @@ To prepare for deployment to Azure Container Apps, we must build and deploy both
     --image "tasksmanager/$BACKEND_SERVICE_NAME" `
     --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
     ```
-==== "Linux"
+=== "Linux"
     ```shell
-    az acr build \
-        --registry $AZURE_CONTAINER_REGISTRY_NAME \
-        --image "tasksmanager/$BACKEND_API_NAME" \
-        --file "TasksTracker.TasksManager.Backend.Api/Dockerfile" .
+    cd $PROJECT_ROOT
 
     az acr build \
-        --registry $AZURE_CONTAINER_REGISTRY_NAME \
-        --image "tasksmanager/$BACKEND_SERVICE_NAME" \
-        --file "TasksTracker.Processor.Backend.Svc/Dockerfile" .
+      --registry $AZURE_CONTAINER_REGISTRY_NAME \
+      --image "tasksmanager/$BACKEND_API_NAME" \
+      --file "TasksTracker.TasksManager.Backend.Api/Dockerfile" .
+
+    az acr build \
+      --registry $AZURE_CONTAINER_REGISTRY_NAME \
+      --image "tasksmanager/$BACKEND_SERVICE_NAME" \
+      --file "TasksTracker.Processor.Backend.Svc/Dockerfile" .
     ```
 
 #### 3.2 Add the Cron Dapr Component to ACA Environment
 
-==== "Windows"
+=== "Windows"
     ```shell
     # Cron binding component
     az containerapp env dapr-component set `
@@ -179,21 +183,21 @@ To prepare for deployment to Azure Container Apps, we must build and deploy both
     --dapr-component-name scheduledtasksmanager `
     --yaml '.\aca-components\containerapps-scheduled-cron.yaml'
     ```
-==== "Linux"
+=== "Linux"
     ```shell
     # Cron binding component
     az containerapp env dapr-component set \
-        --name $ENVIRONMENT --resource-group $RESOURCE_GROUP \
-        --dapr-component-name scheduledtasksmanager \
-        --yaml './aca-components/containerapps-scheduled-cron.yaml'
+      --name $ENVIRONMENT --resource-group $RESOURCE_GROUP \
+      --dapr-component-name scheduledtasksmanager \
+      --yaml './aca-components/containerapps-scheduled-cron.yaml'
     ```
 
 #### 3.3 Deploy New Revisions of the Backend API and Backend Background Processor to ACA
 
 As we did before, we need to update the Azure Container App hosting the Backend API & Backend Background Processor with a new revision so our code changes are available for the end users.
-To accomplish this run the PowerShell script below:
+To accomplish this run the script below:
 
-==== "Windows"
+=== "Windows"
     ```shell
     # Update Backend API App container app and create a new revision
     az containerapp update `
@@ -207,20 +211,20 @@ To accomplish this run the PowerShell script below:
     --resource-group $RESOURCE_GROUP `
     --revision-suffix v$TODAY-4
     ```
-==== "Linux"
+=== "Linux"
     ```shell
     # Update Backend API App container app and create a new revision
     az containerapp update \
-        --name $BACKEND_API_NAME \
-        --resource-group $RESOURCE_GROUP \
-        --revision-suffix v$TODAY-4
+      --name $BACKEND_API_NAME \
+      --resource-group $RESOURCE_GROUP \
+      --revision-suffix v$TODAY-4
 
     # Update Backend Background Processor container app and create a new revision
 
     az containerapp update \
-        --name $BACKEND_SERVICE_NAME \
-        --resource-group $RESOURCE_GROUP \
-        --revision-suffix v$TODAY-4
+      --name $BACKEND_SERVICE_NAME \
+      --resource-group $RESOURCE_GROUP \
+      --revision-suffix v$TODAY-4
     ```
 
 !!! note

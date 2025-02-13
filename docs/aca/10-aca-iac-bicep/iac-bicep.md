@@ -272,8 +272,8 @@ Start by creating a new resource group which will contain all the resources to b
     export LOCATION_MOD10="<your location>"
 
     az group create \
-    --name $RESOURCE_GROUP_MOD10 \
-    --location $LOCATION_MOD10
+      --name $RESOURCE_GROUP_MOD10 \
+      --location $LOCATION_MOD10
     ```
 
 
@@ -307,18 +307,18 @@ Next, we will prepare container images for the three container apps and update t
         $CONTAINER_REGISTRY_NAME_MOD10="<your ACR name>"
 
         az acr create `
-            --resource-group $RESOURCE_GROUP_MOD10 `
-            --name $CONTAINER_REGISTRY_NAME_MOD10 `
-            --sku Basic
+        --resource-group $RESOURCE_GROUP_MOD10 `
+        --name $CONTAINER_REGISTRY_NAME_MOD10 `
+        --sku Basic
         ```
     === "Linux"
         ```shell
         $CONTAINER_REGISTRY_NAME_MOD10="<your ACR name>"
 
         az acr create \
-            --resource-group $RESOURCE_GROUP_MOD10 \
-            --name $CONTAINER_REGISTRY_NAME_MOD10 \
-            --sku Basic
+          --resource-group $RESOURCE_GROUP_MOD10 \
+          --name $CONTAINER_REGISTRY_NAME_MOD10 \
+          --sku Basic
         ```
 
     2. Build and push the images to ACR. Make sure you are at the root project directory when executing the following commands:
@@ -328,40 +328,40 @@ Next, we will prepare container images for the three container apps and update t
         # Build Backend API on ACR and Push to ACR
 
         az acr build --registry $CONTAINER_REGISTRY_NAME_MOD10 `
-            --image "tasksmanager/tasksmanager-backend-api" `
-            --file 'TasksTracker.TasksManager.Backend.Api/Dockerfile' .
+        --image "tasksmanager/tasksmanager-backend-api" `
+        --file 'TasksTracker.TasksManager.Backend.Api/Dockerfile' .
         
         ## Build Backend Service on ACR and Push to ACR
 
         az acr build --registry $CONTAINER_REGISTRY_NAME_MOD10 `
-            --image "tasksmanager/tasksmanager-backend-processor" `
-            --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
+        --image "tasksmanager/tasksmanager-backend-processor" `
+        --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
 
         ## Build Frontend Web App on ACR and Push to ACR
 
         az acr build --registry $CONTAINER_REGISTRY_NAME_MOD10 `
-            --image "tasksmanager/tasksmanager-frontend-webapp" `
-            --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
+        --image "tasksmanager/tasksmanager-frontend-webapp" `
+        --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
         ```
     === "Linux"
         ```shell
         # Build Backend API on ACR and Push to ACR
 
         az acr build --registry $CONTAINER_REGISTRY_NAME_MOD10 \
-            --image "tasksmanager/tasksmanager-backend-api" \
-            --file 'TasksTracker.TasksManager.Backend.Api/Dockerfile' .
+          --image "tasksmanager/tasksmanager-backend-api" \
+          --file 'TasksTracker.TasksManager.Backend.Api/Dockerfile' .
         
         # Build Backend Service on ACR and Push to ACR
 
         az acr build --registry $CONTAINER_REGISTRY_NAME_MOD10 \
-            --image "tasksmanager/tasksmanager-backend-processor" \
-            --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
+          --image "tasksmanager/tasksmanager-backend-processor" \
+          --file 'TasksTracker.Processor.Backend.Svc/Dockerfile' .
 
         # Build Frontend Web App on ACR and Push to ACR
 
         az acr build --registry $CONTAINER_REGISTRY_NAME_MOD10 \
-            --image "tasksmanager/tasksmanager-frontend-webapp" \
-            --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
+          --image "tasksmanager/tasksmanager-frontend-webapp" \
+          --file 'TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
         ```
 
     3. Update the `main.parameters.json` file with the container registry name and the container images names as shown below:
@@ -395,54 +395,54 @@ Next, we will prepare container images for the three container apps and update t
         $CONTAINER_REGISTRY_NAME_MOD10="<your ACR name>"
 
         az acr create `
-            --resource-group $RESOURCE_GROUP_MOD10 `
-            --name $CONTAINER_REGISTRY_NAME_MOD10 `
-            --sku Basic
+        --resource-group $RESOURCE_GROUP_MOD10 `
+        --name $CONTAINER_REGISTRY_NAME_MOD10 `
+        --sku Basic
         ```
     === "Linux"
         ```shell
         export CONTAINER_REGISTRY_NAME_MOD10="<your ACR name>"
 
         az acr create `
-            --resource-group $RESOURCE_GROUP_MOD10 `
-            --name $CONTAINER_REGISTRY_NAME_MOD10 `
-            --sku Basic
+          --resource-group $RESOURCE_GROUP_MOD10 `
+          --name $CONTAINER_REGISTRY_NAME_MOD10 `
+          --sku Basic
         ```
     2. Import the images to your private ACR as shown below:
 
     === "Windows"
         ```shell 
-            az acr import `
-            --name $CONTAINER_REGISTRY_NAME_MOD10 `
-            --image tasksmanager/tasksmanager-backend-api `
-            --source ghcr.io/azure/tasksmanager-backend-api:latest
-            
-            az acr import  `
-            --name $CONTAINER_REGISTRY_NAME_MOD10 `
-            --image tasksmanager/tasksmanager-frontend-webapp `
-            --source ghcr.io/azure/tasksmanager-frontend-webapp:latest
-            
-            az acr import  `
-            --name $CONTAINER_REGISTRY_NAME_MOD10 `
-            --image tasksmanager/tasksmanager-backend-processor `
-            --source ghcr.io/azure/tasksmanager-backend-processor:latest
+        az acr import `
+        --name $CONTAINER_REGISTRY_NAME_MOD10 `
+        --image tasksmanager/tasksmanager-backend-api `
+        --source ghcr.io/azure/tasksmanager-backend-api:latest
+        
+        az acr import  `
+        --name $CONTAINER_REGISTRY_NAME_MOD10 `
+        --image tasksmanager/tasksmanager-frontend-webapp `
+        --source ghcr.io/azure/tasksmanager-frontend-webapp:latest
+        
+        az acr import  `
+        --name $CONTAINER_REGISTRY_NAME_MOD10 `
+        --image tasksmanager/tasksmanager-backend-processor `
+        --source ghcr.io/azure/tasksmanager-backend-processor:latest
         ```
-     === "Linux"
+    === "Linux"
         ```shell 
-            az acr import \
-            --name $CONTAINER_REGISTRY_NAME_MOD10 \
-            --image tasksmanager/tasksmanager-backend-api \
-            --source ghcr.io/azure/tasksmanager-backend-api:latest
-            
-            az acr import  \
-            --name $CONTAINER_REGISTRY_NAME_MOD10 \
-            --image tasksmanager/tasksmanager-frontend-webapp \
-            --source ghcr.io/azure/tasksmanager-frontend-webapp:latest
-            
-            az acr import  \
-            --name $CONTAINER_REGISTRY_NAME_MOD10 \
-            --image tasksmanager/tasksmanager-backend-processor \
-            --source ghcr.io/azure/tasksmanager-backend-processor:latest
+        az acr import \
+          --name $CONTAINER_REGISTRY_NAME_MOD10 \
+          --image tasksmanager/tasksmanager-backend-api \
+          --source ghcr.io/azure/tasksmanager-backend-api:latest
+        
+        az acr import  \
+          --name $CONTAINER_REGISTRY_NAME_MOD10 \
+          --image tasksmanager/tasksmanager-frontend-webapp \
+          --source ghcr.io/azure/tasksmanager-frontend-webapp:latest
+        
+        az acr import  \
+          --name $CONTAINER_REGISTRY_NAME_MOD10 \
+          --image tasksmanager/tasksmanager-backend-processor \
+          --source ghcr.io/azure/tasksmanager-backend-processor:latest
         ```
 
 
@@ -488,7 +488,7 @@ Next, we will prepare container images for the three container apps and update t
     }   
     ```
 
-Start the deployment by calling `az deployment group create`. To accomplish this, open the PowerShell console and use the content below.
+Start the deployment by calling `az deployment group create`. To accomplish this, open the console and use the content below.
 === "Windows"
     ```shell
     az deployment group create `
@@ -499,9 +499,9 @@ Start the deployment by calling `az deployment group create`. To accomplish this
 === "Linux"
     ```shell
     az deployment group create \
-    --resource-group $RESOURCE_GROUP_MOD10 \
-    --template-file "./bicep/main.bicep" \
-    --parameters "./bicep/main.parameters.json"
+      --resource-group $RESOURCE_GROUP_MOD10 \
+      --template-file "./bicep/main.bicep" \
+      --parameters "./bicep/main.parameters.json"
     ```
 
 The Azure CLI will take the Bicep module and start creating the deployment in the resource group.

@@ -96,18 +96,18 @@ Let's now create a secret named `svcbus-connstring` in our `tasksmanager-backend
     ```shell
     # List Service Bus Access Policy RootManageSharedAccessKey
     export SERVICE_BUS_CONNECTION_STRING=$(az servicebus namespace authorization-rule keys list \
-    --name RootManageSharedAccessKey \
-    --resource-group $RESOURCE_GROUP \
-    --namespace-name $SERVICE_BUS_NAMESPACE_NAME \
-    --query primaryConnectionString \
-    --output tsv)
+      --name RootManageSharedAccessKey \
+      --resource-group $RESOURCE_GROUP \
+      --namespace-name $SERVICE_BUS_NAMESPACE_NAME \
+      --query primaryConnectionString \
+      --output tsv)
 
     # Create a new secret named 'svcbus-connstring' in backend processor container app
     az containerapp secret set \
-    --name $BACKEND_SERVICE_NAME \
-    --resource-group $RESOURCE_GROUP \
-    --secrets "svcbus-connstring=$SERVICE_BUS_CONNECTION_STRING"
-```
+      --name $BACKEND_SERVICE_NAME \
+      --resource-group $RESOURCE_GROUP \
+      --secrets "svcbus-connstring=$SERVICE_BUS_CONNECTION_STRING"
+    ```
 
 #### 2. Create a Custom Scaling Rule from Azure CLI
 
@@ -136,15 +136,15 @@ Now we are ready to add a new custom scaling rule to match the business requirem
 === "Linux"
     ```shell
     az containerapp update \
-    --name $BACKEND_SERVICE_NAME \
-    --resource-group $RESOURCE_GROUP \
-    --min-replicas 1 \
-    --max-replicas 5 \
-    --revision-suffix v$TODAY-6 \
-    --scale-rule-name "topic-msgs-length" \
-    --scale-rule-type "azure-servicebus" \
-    --scale-rule-auth "connection=svcbus-connstring" \
-    --scale-rule-metadata "topicName=$SERVICE_BUS_TOPIC_NAME" \
+      --name $BACKEND_SERVICE_NAME \
+      --resource-group $RESOURCE_GROUP \
+      --min-replicas 1 \
+      --max-replicas 5 \
+      --revision-suffix v$TODAY-6 \
+      --scale-rule-name "topic-msgs-length" \
+      --scale-rule-type "azure-servicebus" \
+      --scale-rule-auth "connection=svcbus-connstring" \
+      --scale-rule-metadata "topicName=$SERVICE_BUS_TOPIC_NAME" \
                         "subscriptionName=$SERVICE_BUS_TOPIC_SUBSCRIPTION" \
                         "namespace=$SERVICE_BUS_NAMESPACE_NAME" \
                         "messageCount=10" \
@@ -183,9 +183,9 @@ To get the number of current replicas of service `tasksmanager-backend-processor
 === "Linux"
     ```shell
     az containerapp replica list \
-    --name $BACKEND_SERVICE_NAME \
-    --resource-group $RESOURCE_GROUP \
-    --query "[].name"
+      --name $BACKEND_SERVICE_NAME \
+      --resource-group $RESOURCE_GROUP \
+      --query "[].name"
     ```
 
 The message structure our backend processor expects is similar to the JSON shown below. So copy this message and click on `Send messages` button, paste the message content, set the content type to `application/json`, check the `Repeat Send` check box, select `10000` messages and put an interval of `1ms` between them. This ensures that we are sending high volume at short intervals, so that the single replica container app cannot absorb and process quickly enough and will consequently need to scale out. Finally click `Send` when you are ready.

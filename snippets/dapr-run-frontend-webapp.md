@@ -15,7 +15,7 @@
     ```
 === "Linux"
     ```shell
-    cd ~/TasksTracker.ContainerApps/TasksTracker.WebPortal.Frontend.Ui
+    cd $PROJECT_ROOT/TasksTracker.WebPortal.Frontend.Ui
 
     dapr run \
     --app-id tasksmanager-frontend-webapp \

@@ -115,7 +115,7 @@ In this module, we will accomplish three objectives:
         ```
     === "Linux"
         ```shell
-        cd ~/TasksTracker.ContainerApps/TasksTracker.TasksManager.Backend.Api
+        cd $PROJECT_ROOT/TasksTracker.TasksManager.Backend.Api
         dotnet build
         ```
 

@@ -98,13 +98,11 @@ Now we will add a new ASP.NET Core Web API project named **TasksTracker.Processo
 
     As our workshop takes advantage of microservices, the use case for minimal APIs is given. However, in order to make the workshop a bit more demonstrable, we will, for now, stick with controller-based APIs.
 
-=== ".NET 8 or above"
-
-    === "Windows"
+=== "Windows"
     ```shell
     dotnet new webapi --use-controllers -o TasksTracker.Processor.Backend.Svc
     ```
-    === "Linux"
+=== "Linux"
     ```shell
     dotnet new webapi --use-controllers -o TasksTracker.Processor.Backend.Svc
     ```
@@ -212,10 +210,17 @@ Update below file in **TasksTracker.Processor.Backend.Svc** project.
         --8<-- "docs/aca/05-aca-dapr-pubsubapi/Program-dotnet9.cs"
         ```
 
-- Let's verify that the Dapr dependency is restored properly and that the project compiles. From VS Code Terminal tab, open developer command prompt or PowerShell terminal and navigate to the parent directory which hosts the `.csproj` project folder and build the project.
+- Let's verify that the Dapr dependency is restored properly and that the project compiles. From VS Code Terminal tab, open a new developer command prompt or PowerShell terminal and navigate to the parent directory which hosts the `.csproj` project folder and build the project.
 
+=== "Windows"    
     ```shell
     cd ~\TasksTracker.ContainerApps\TasksTracker.Processor.Backend.Svc
+    dotnet build
+    ```
+=== "Linux"
+    ```shell
+    # the PROJECT_ROOT variable is not yet set in the new terminal so you need to manually move into your project's root folder eg.
+    cd ~/TasksTracker.ContainerApps/TasksTracker.Processor.Backend.Svc
     dotnet build
     ```
 
@@ -232,15 +237,24 @@ Update below file in **TasksTracker.Processor.Backend.Svc** project.
 
 With all those bits in place, we are ready to run the publisher service `Backend API` and the consumer service `Backend Background Service` and test Pub/Sub pattern end to end.
 
-```shell
-$BACKEND_SERVICE_APP_PORT=<backend service https port in Properties->launchSettings.json (e.g. 7051)>
-```
+=== "Windows"
+    ```shell
+    $BACKEND_SERVICE_APP_PORT=<backend service https port in Properties->launchSettings.json (e.g. 7051)>
+    ```
+=== "Linux"
+    ```shell
+    export BACKEND_SERVICE_APP_PORT=<backend service https port in Properties->launchSettings.json (e.g. 7051)>
+    ```
 
---8<-- "snippets/update-variables.md::5"
+First let's update our variable file with our new variable and restore the rest of the variables.
 
-To do so, run the below commands in two separate PowerShell console, ensure you are on the right root folder of each respective project.
+--8<-- "snippets/update-variables.md:2:13"
 
---8<-- "snippets/restore-variables.md:7:11"
+We then update the variables using the below commands in the two open separate consoles, ensure you are on the right root folder of each respective project.
+
+--8<-- "snippets/restore-variables.md:16:23"
+
+Now let's run the projects directly with the `dapr` command.
 
 === ".NET 8 or above"
 
@@ -315,7 +329,8 @@ To do this, update below file under the project **TasksTracker.TasksManager.Back
 
 This is a good opportunity to save intermediately:
 
---8<-- "snippets/update-variables.md:7:12"
+--8<-- "snippets/update-variables.md:2:13"
+
 --8<-- "snippets/persist-state.md:module51"
 
 ***
@@ -746,17 +761,17 @@ Lastly, we need to restart both container apps revisions to pick up the role ass
     application and start creating new tasks. You should start seeing logs similar to the ones shown in the image below. The command will stop executing after 60 seconds of inactivity.
 
     === "Windows"
-    ```shell
-    az containerapp logs show --follow `
-    -n $BACKEND_SERVICE_NAME `
-    -g $RESOURCE_GROUP
-    ```
+        ```shell
+        az containerapp logs show --follow `
+        -n $BACKEND_SERVICE_NAME `
+        -g $RESOURCE_GROUP
+        ```
     === "Linux"
-    ```shell
-    az containerapp logs show --follow \
-      -n $BACKEND_SERVICE_NAME \
-      -g $RESOURCE_GROUP
-    ```
+        ```shell
+        az containerapp logs show --follow \
+        -n $BACKEND_SERVICE_NAME \
+        -g $RESOURCE_GROUP
+        ```
 
     ![email-log](../../assets/images/05-aca-dapr-pubsubapi/az_containerapp_logs.png)
 

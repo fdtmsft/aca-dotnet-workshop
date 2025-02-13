@@ -3,6 +3,7 @@ title: Variables
 parent: Appendix
 has_children: false
 nav_order: 3
+canonical_url: 'https://azure.github.io/aca-dotnet-workshop'
 ---
 
 # Variables
@@ -21,7 +22,7 @@ Execute this script to persist all variables in the current session at any time.
     --8<-- "docs/aca/30-appendix/Set-Variables.ps1"
     ```
 === "Linux"
-    Copy this script in the project's root (e.g. `~/TasksTracker.ContainerApps`).
+    Copy this script in the project's root (e.g. `$PROJECT_ROOT$`).
     ```shell
     -8<-- "docs/aca/30-appendix/set_variables.sh"
     ```

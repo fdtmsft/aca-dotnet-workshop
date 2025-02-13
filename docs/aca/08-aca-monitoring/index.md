@@ -185,9 +185,16 @@ In the previous module, we've used Dapr Secret Store to store connection strings
 
 We need to set the Application Insights Instrumentation Key so that the projects are able to send telemetry data to the Application Insights instance. We are going to set this via secrets and environment variables once we redeploy the Container Apps and create new revisions. Locally, we can **set it in each appsettings.json** file. Obtain the key from the variable:
 
-```shell
-$APPINSIGHTS_INSTRUMENTATIONKEY
-```
+=== "Windows"
+    ```shell
+    $APPINSIGHTS_INSTRUMENTATIONKEY
+    ```
+=== "Linux"
+    ```shell
+    echo $APPINSIGHTS_INSTRUMENTATIONKEY
+    ```
+
+You then update the appsettings file with this key.
 
 === "appsettings.json"
 
@@ -248,10 +255,12 @@ Let's create a secret named `appinsights-key` on each Container App which contai
 
 As we did before, we are required to build and push the images of the three applications to ACR. By doing so, they will be prepared to be deployed in ACA.
 
-To accomplish this, continue using the same PowerShell console and paste the code below (make sure you are on the following directory **TasksTracker.ContainerApps**):
+To accomplish this, continue using the same PowerShell console and paste the code below:
 
 === "Windows"
     ```shell
+    cd ~\TasksTracker.ContainerApps
+
     # Build Backend API on ACR and Push to ACR
     az acr build `
     --registry $AZURE_CONTAINER_REGISTRY_NAME `
@@ -273,6 +282,8 @@ To accomplish this, continue using the same PowerShell console and paste the cod
 
 === "Linux"
     ```shell
+    cd $PROJECT_ROOT
+    
     # Build Backend API on ACR and Push to ACR
     az acr build \
       --registry $AZURE_CONTAINER_REGISTRY_NAME \
