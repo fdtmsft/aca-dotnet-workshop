@@ -48,6 +48,7 @@ This workshop typically spans several days. As such, you may close your tools, e
         ```shell
         mkdir TasksTracker.ContainerApps
         cd TasksTracker.ContainerApps
+        export PROJECT_ROOT=$(pwd)
         ```
 
 - Initialize the git repository.
@@ -89,8 +90,6 @@ This workshop typically spans several days. As such, you may close your tools, e
         git add ./.gitignore
         git commit -m "Add .gitignore"
         ```
-
-
 
 ### Set-Variables & Variables Script
 

@@ -49,6 +49,7 @@ vars=(
     "WORKSPACE_ID"
     "WORKSPACE_NAME"
     "WORKSPACE_SECRET"
+    "PROJECT_ROOT"
 )
 
 # Ensure that variables exist in the terminal session. If none exist, we need to prevent accidental wiping of the Variables.sh file.
